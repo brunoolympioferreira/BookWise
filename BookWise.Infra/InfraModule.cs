@@ -1,4 +1,7 @@
-﻿using BookWise.Infra.Persistence;
+﻿using BookWise.Core.Repositories;
+using BookWise.Infra.Persistence;
+using BookWise.Infra.Persistence.Repositories;
+using BookWise.Infra.Persistence.UnityOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,16 +13,28 @@ public static class InfraModule
         var connectionString = Environment.GetEnvironmentVariable("CONN_POSTGRE_LOCALHOST_BOOK_WISE");
 
         services
-            .AddDb(connectionString);
+            .AddDb(connectionString)
+            .AddRepositories()
+            .AddUnityOfWork();
     }
 
     private static IServiceCollection AddDb(this IServiceCollection services, string? connectionString)
     {
-        services.AddDbContext<BookWiseDbContext>(options =>
+        return services.AddDbContext<BookWiseDbContext>(options =>
         {
             options.UseNpgsql(connectionString);
         });
+    }
 
-        return services;
+    private static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        return services
+            .AddScoped<IUserRepository, UserRepository>();
+    }
+
+    private static IServiceCollection AddUnityOfWork(this IServiceCollection services) 
+    {
+        return services
+            .AddScoped<IUnityOfWork, UnityOfWork>();
     }
 }

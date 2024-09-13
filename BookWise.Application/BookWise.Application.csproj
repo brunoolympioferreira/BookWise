@@ -11,4 +11,9 @@
     <ProjectReference Include="..\BookWise.Infra\BookWise.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\ViewModels\" />
+    <Folder Include="Validations\" />
+  </ItemGroup>
+
 </Project>
