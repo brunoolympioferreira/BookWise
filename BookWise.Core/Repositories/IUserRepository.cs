@@ -1,8 +1,10 @@
 ﻿using BookWise.Core.Entities;
+using BookWise.Core.Exceptions;
 
 namespace BookWise.Core.Repositories;
 public interface IUserRepository
 {
     Task AddAsync(User user);
     Task<bool> ExistUserByEmail(string email, Guid id);
+    Task<Result<User>> GetByIdAsync(Guid id);
 }

@@ -13,7 +13,7 @@ public class CreateUserValidation : AbstractValidator<CreateUserInputModel>
 
         RuleFor(u => u.Password)
             .Must(ValidPassword)
-            .WithMessage("enha deve conter pelo menos 8 caracteres, um número, uma letra maiúscula, uma minúscula, e um caractere especial");
+            .WithMessage("Senha deve conter pelo menos 8 caracteres, um número, uma letra maiúscula, uma minúscula, e um caractere especial");
 
         RuleFor(u => u.Name)
             .NotEmpty()

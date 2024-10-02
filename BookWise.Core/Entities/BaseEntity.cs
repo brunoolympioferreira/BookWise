@@ -4,7 +4,7 @@ public abstract class BaseEntity
     public BaseEntity()
     {
         Id = Guid.NewGuid();
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow.AddHours(-3);
     }
 
     public Guid Id { get; private set; }
