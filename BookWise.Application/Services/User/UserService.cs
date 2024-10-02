@@ -1,6 +1,9 @@
-﻿using BookWise.Application.Models.InputModels;
+﻿using BookWise.Application.Models.InputModels.User;
+using BookWise.Application.Models.ViewModels.Review;
+using BookWise.Application.Models.ViewModels.User;
 using BookWise.Application.Services.Auth;
 using BookWise.Application.Validations.User;
+using BookWise.Core.Entities;
 using BookWise.Core.Exceptions;
 using BookWise.Infra.Persistence.UnityOfWork;
 
@@ -21,6 +24,24 @@ public class UserService(IUnityOfWork unityOfWork, IAuthService authService) : I
         await unityOfWork.CompleteAsync();
 
         return user.Id;
+    }
+
+    public async Task<UserDetailViewModel> GetById(Guid id)
+    {
+        Result<Core.Entities.User> userResult = await unityOfWork.Users.GetByIdAsync(id);
+
+        if (userResult.IsSuccess == false)
+        {
+            throw new ValidationErrorsException(userResult.Error);
+        }
+
+        List<ReviewDetailViewModel> reviewsViewModel = userResult.Value.Reviews
+            .Select(review => new ReviewDetailViewModel(review))
+            .ToList();
+
+        UserDetailViewModel viewModel = new(userResult.Value, reviewsViewModel);
+
+        return viewModel;
     }
 
     private static void Validate(CreateUserInputModel model)

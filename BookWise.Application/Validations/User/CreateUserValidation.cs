@@ -1,4 +1,4 @@
-﻿using BookWise.Application.Models.InputModels;
+﻿using BookWise.Application.Models.InputModels.User;
 using FluentValidation;
 using System.Text.RegularExpressions;
 
