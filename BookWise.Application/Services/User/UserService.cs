@@ -32,7 +32,7 @@ public class UserService(IUnityOfWork unityOfWork, IAuthService authService) : I
 
         if (userResult.IsSuccess == false)
         {
-            throw new ValidationErrorsException(userResult.Error);
+            throw new NotFoundErrorsException(userResult.Error);
         }
 
         List<ReviewDetailViewModel> reviewsViewModel = userResult.Value.Reviews

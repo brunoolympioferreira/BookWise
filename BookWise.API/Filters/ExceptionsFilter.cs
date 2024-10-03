@@ -20,6 +20,9 @@ public class ExceptionsFilter : IExceptionFilter
     {
         if (context.Exception is ValidationErrorsException)
             HandleValidationErrorsException(context);
+
+        if (context.Exception is NotFoundErrorsException)
+            HandleNotFoundErrorsException(context);
     }
 
     private void HandleValidationErrorsException(ExceptionContext context)
@@ -35,6 +38,14 @@ public class ExceptionsFilter : IExceptionFilter
         {
             context.Result = new ObjectResult(new ErrorViewModel(validationErrorException.ErrorMessages));
         }
+    }
+
+    private void HandleNotFoundErrorsException(ExceptionContext context)
+    {
+        NotFoundErrorsException? notFounderrorException = context.Exception as NotFoundErrorsException;
+        context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
+
+        context.Result = new ObjectResult(new ErrorViewModel(notFounderrorException.ErrorMessage));
     }
 
     private void ThrowUnknownError(ExceptionContext context)
