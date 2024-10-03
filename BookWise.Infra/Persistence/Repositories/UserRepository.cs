@@ -20,6 +20,15 @@ public class UserRepository(BookWiseDbContext dbContext) : IUserRepository
             .AnyAsync(u => u.Email.Equals(email) && u.Id != id);
     }
 
+    public async Task<List<User>> GetAll()
+    {
+        List<User> users = await _dbContext.Users
+            .AsNoTracking()
+            .ToListAsync();
+
+        return users;
+    }
+
     public async Task<Result<User>> GetByIdAsync(Guid id)
     {
         var user = await _dbContext.Users

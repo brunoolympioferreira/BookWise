@@ -22,4 +22,12 @@ public class UsersController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll([FromServices] IUserService service)
+    {
+        var result = await service.GetAll();
+
+        return Ok(result);
+    }
 }

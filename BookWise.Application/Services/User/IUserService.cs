@@ -6,4 +6,5 @@ public interface IUserService
 {
     Task<Guid> Create(CreateUserInputModel model);
     Task<UserDetailViewModel> GetById(Guid id);
+    Task<List<UserViewModel>> GetAll();
 }

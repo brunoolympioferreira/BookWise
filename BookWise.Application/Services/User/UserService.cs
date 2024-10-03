@@ -26,6 +26,15 @@ public class UserService(IUnityOfWork unityOfWork, IAuthService authService) : I
         return user.Id;
     }
 
+    public async Task<List<UserViewModel>> GetAll()
+    {
+        List<Core.Entities.User> users = await unityOfWork.Users.GetAll();
+
+        List<UserViewModel> viewModels = users.Select(user => new UserViewModel(user)).ToList();
+
+        return viewModels;
+    }
+
     public async Task<UserDetailViewModel> GetById(Guid id)
     {
         Result<Core.Entities.User> userResult = await unityOfWork.Users.GetByIdAsync(id);
