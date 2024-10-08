@@ -3,7 +3,6 @@ using BookWise.Application.Models.ViewModels.Review;
 using BookWise.Application.Models.ViewModels.User;
 using BookWise.Application.Services.Auth;
 using BookWise.Application.Validations.User;
-using BookWise.Core.Entities;
 using BookWise.Core.Exceptions;
 using BookWise.Infra.Persistence.UnityOfWork;
 
@@ -24,6 +23,29 @@ public class UserService(IUnityOfWork unityOfWork, IAuthService authService) : I
         await unityOfWork.CompleteAsync();
 
         return user.Id;
+    }
+
+    public async Task Update(UpdateUserInputModel model, Guid id)
+    {
+        Validate(model);
+        await ValidateEmailAlreadyIntegrated(model.Email, id);
+
+        string passwordHash = authService.ComputeSha256Hash(model.Password);
+
+        Result<Core.Entities.User> user = await unityOfWork.Users.GetByIdAsync(id);
+
+        if (user.IsSuccess == false)
+        {
+            throw new NotFoundErrorsException("Usuário não existe na base de dados");
+        }
+
+        Core.Entities.User userUpdated = model.ToEntity(passwordHash);
+
+        user.Value.Update(userUpdated);
+
+        unityOfWork.Users.Update(user.Value);
+
+        await unityOfWork.CompleteAsync();
     }
 
     public async Task<List<UserViewModel>> GetAll()
@@ -65,13 +87,25 @@ public class UserService(IUnityOfWork unityOfWork, IAuthService authService) : I
         }
     }
 
+    private static void Validate(UpdateUserInputModel model)
+    {
+        var validator = new UpdateUserValidation();
+        var result = validator.Validate(model);
+
+        if (!result.IsValid)
+        {
+            var errorMessages = result.Errors.Select(x => x.ErrorMessage).ToList();
+            throw new ValidationErrorsException(errorMessages);
+        }
+    }
+
     private async Task ValidateEmailAlreadyIntegrated(string email, Guid id)
     {
         bool existUserWithEmail = await unityOfWork.Users.ExistUserByEmail(email, id);
 
         if (existUserWithEmail)
         {
-            throw new ValidationErrorsException("Email já cadastrado");
+            throw new ValidationErrorsException($"Email {email} já cadastrado");
         }
 
     }

@@ -13,10 +13,14 @@ public class UserRepository(BookWiseDbContext dbContext) : IUserRepository
         await _dbContext.AddAsync(user);
     }
 
+    public void Update(User user)
+    {
+        _dbContext.Users.Update(user);
+    }
+
     public async Task<bool> ExistUserByEmail(string email, Guid id)
     {
         return await _dbContext.Users
-            .AsNoTracking()
             .AnyAsync(u => u.Email.Equals(email) && u.Id != id);
     }
 

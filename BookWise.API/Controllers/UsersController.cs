@@ -15,6 +15,14 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update([FromServices] IUserService service, [FromBody] UpdateUserInputModel model, Guid id)
+    {
+        await service.Update(model, id);
+
+        return Ok();
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserById([FromServices] IUserService service, Guid id)
     {
