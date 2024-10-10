@@ -38,4 +38,12 @@ public class UsersController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Remove([FromServices] IUserService service, Guid id)
+    {
+        await service.Remove(id);
+
+        return Ok();
+    }
 }

@@ -75,6 +75,20 @@ public class UserService(IUnityOfWork unityOfWork, IAuthService authService) : I
         return viewModel;
     }
 
+    public async Task Remove(Guid id)
+    {
+        Result<Core.Entities.User> userResult = await unityOfWork.Users.GetByIdAsync(id);
+
+        if (userResult.IsSuccess == false)
+        {
+            throw new NotFoundErrorsException(userResult.Error);
+        }
+
+        unityOfWork.Users.Remove(userResult.Value);
+
+        await unityOfWork.CompleteAsync();
+    }
+
     private static void Validate(CreateUserInputModel model)
     {
         var validator = new CreateUserValidation();

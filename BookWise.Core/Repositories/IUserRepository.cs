@@ -9,4 +9,5 @@ public interface IUserRepository
     Task<bool> ExistUserByEmail(string email, Guid id);
     Task<Result<User>> GetByIdAsync(Guid id);
     Task<List<User>> GetAll();
+    void Remove(User user);
 }

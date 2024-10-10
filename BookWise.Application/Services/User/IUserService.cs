@@ -8,4 +8,5 @@ public interface IUserService
     Task Update(UpdateUserInputModel model, Guid id);
     Task<UserDetailViewModel> GetById(Guid id);
     Task<List<UserViewModel>> GetAll();
+    Task Remove(Guid id);
 }

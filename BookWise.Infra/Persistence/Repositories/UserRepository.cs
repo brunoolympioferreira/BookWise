@@ -46,4 +46,9 @@ public class UserRepository(BookWiseDbContext dbContext) : IUserRepository
 
         return Result<User>.Success(user);
     }
+
+    public void Remove(User user)
+    {
+        _dbContext.Remove(user);
+    }
 }
