@@ -13,4 +13,11 @@ public class User : BaseEntity
     public string Password { get; private set; }
     public string Name { get; private set; }
     public List<Review> Reviews { get; private set; }
+
+    public void Update(User user)
+    {
+        Email = user.Email;
+        Password = user.Password;
+        Name = user.Name;
+    }
 }

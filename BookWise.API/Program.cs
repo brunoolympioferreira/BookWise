@@ -1,7 +1,19 @@
+using BookWise.API.Filters;
+using BookWise.Application;
 using BookWise.Infra;
 using Serilog;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+{
+    x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+
+builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionsFilter)));
 
 // Add services to the container.
 
@@ -10,6 +22,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddApplicationModule();
 builder.Services.AddInfraModule();
 
 var connectionString = Environment.GetEnvironmentVariable("CONN_POSTGRE_LOCALHOST_BOOK_WISE");
