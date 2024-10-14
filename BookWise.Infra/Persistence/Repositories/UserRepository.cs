@@ -37,6 +37,7 @@ public class UserRepository(BookWiseDbContext dbContext) : IUserRepository
     {
         var user = await _dbContext.Users
             .AsNoTracking()
+            .Include(u => u.Reviews)
             .SingleOrDefaultAsync(u => u.Id == id);
 
         if (user == null)

@@ -1,13 +1,16 @@
 ﻿using BookWise.Application.Models.InputModels.User;
 using BookWise.Application.Services.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookWise.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class UsersController : ControllerBase
 {
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> Create([FromServices] IUserService service, [FromBody] CreateUserInputModel model)
     {
         var result = await service.Create(model);
