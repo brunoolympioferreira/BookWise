@@ -47,6 +47,20 @@ public class UserRepository(BookWiseDbContext dbContext) : IUserRepository
         return Result<User>.Success(user);
     }
 
+    public async Task<Result<User>> GetUserByEmailAndPasswordAsync(string email, string passwordHash)
+    {
+        var user = await _dbContext.Users
+            .AsNoTracking()
+            .SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
+
+        if(user == null)
+        {
+            return Result<User>.Failure("Usuário e/ou senha inválido");
+        }
+
+        return Result<User>.Success(user);
+    }
+
     public void Remove(User user)
     {
         _dbContext.Remove(user);

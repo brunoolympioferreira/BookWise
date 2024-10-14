@@ -9,5 +9,6 @@ public interface IUserRepository
     Task<bool> ExistUserByEmail(string email, Guid id);
     Task<Result<User>> GetByIdAsync(Guid id);
     Task<List<User>> GetAll();
+    Task<Result<User>> GetUserByEmailAndPasswordAsync(string email, string passwordHash);
     void Remove(User user);
 }
