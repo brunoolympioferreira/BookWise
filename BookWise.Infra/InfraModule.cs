@@ -1,4 +1,5 @@
 ﻿using BookWise.Core.Repositories;
+using BookWise.Infra.GoogleBook;
 using BookWise.Infra.Persistence;
 using BookWise.Infra.Persistence.Repositories;
 using BookWise.Infra.Persistence.UnityOfWork;
@@ -15,7 +16,8 @@ public static class InfraModule
         services
             .AddDb(connectionString)
             .AddRepositories()
-            .AddUnityOfWork();
+            .AddUnityOfWork()
+            .AddClients();
     }
 
     private static IServiceCollection AddDb(this IServiceCollection services, string? connectionString)
@@ -36,5 +38,11 @@ public static class InfraModule
     {
         return services
             .AddScoped<IUnityOfWork, UnityOfWork>();
+    }
+
+    public static IServiceCollection AddClients(this IServiceCollection services)
+    {
+        return services
+            .AddScoped<IGoogleBookClient, GoogleBookClient>();
     }
 }
