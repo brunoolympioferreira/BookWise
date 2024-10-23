@@ -17,6 +17,5 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
         builder.Property(b => b.PublishedAt).IsRequired();
         builder.Property(b => b.NumberOfPages).IsRequired();
         builder.Property(b => b.AverageGrade).IsRequired();
-        builder.Property(b => b.BookCover).IsRequired();
     }
 }
