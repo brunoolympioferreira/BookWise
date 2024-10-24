@@ -31,7 +31,8 @@ public static class InfraModule
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         return services
-            .AddScoped<IUserRepository, UserRepository>();
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IBookRepository, BookRepository>();
     }
 
     private static IServiceCollection AddUnityOfWork(this IServiceCollection services) 
