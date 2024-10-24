@@ -2,7 +2,7 @@
 public class Book : BaseEntity
 {
     public Book(string title, string description, string iSBN, string author, string genre, DateTime publishedAt,
-        int numberOfPages, decimal averageGrade)
+        int numberOfPages)
     {
         Title = title;
         Description = description;
@@ -11,7 +11,6 @@ public class Book : BaseEntity
         Genre = genre;
         PublishedAt = publishedAt;
         NumberOfPages = numberOfPages;
-        AverageGrade = averageGrade;
         Reviews = [];
     }
 
