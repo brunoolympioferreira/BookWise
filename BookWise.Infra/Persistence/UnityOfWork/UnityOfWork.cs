@@ -7,10 +7,12 @@ public class UnityOfWork : IUnityOfWork
     private readonly BookWiseDbContext _dbContext;
 
     public UnityOfWork(BookWiseDbContext dbContext,
-        IUserRepository users)
+        IUserRepository users,
+        IBookRepository books)
     {
         _dbContext = dbContext;
         Users = users;
+        Books = books;
     }
 
     public async Task<int> CompleteAsync()
@@ -19,6 +21,7 @@ public class UnityOfWork : IUnityOfWork
     }
 
     public IUserRepository Users { get; }
+    public IBookRepository Books { get; }
 
     public void Dispose()
     {
