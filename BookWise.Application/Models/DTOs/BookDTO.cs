@@ -10,40 +10,22 @@ public class BookDTO
     public List<string> Authors { get; set; }
     public string Genre { get; set; }
     public List<string> Genres { get; set; }
-    public DateTime PublishedAt { get; set; }
-    public string PublishedAtStr { get; set; }
+    public string PublishedAt { get; set; }
     public int NumberOfPages { get; set; }
 
     public Core.Entities.Book ToEntity() => new(Title, Description, ISBN, Author, Genre, PublishedAt, NumberOfPages);
 
-    public BookDTO FromModel(BookModel bookModel) => new ()
+    public void FromModel(VolumeInfo volumeInfo)
     {
-        Title = bookModel.Items
-            .Select(v => v.VolumeInfo.Title)
-            .FirstOrDefault() ?? string.Empty,
-        Description = bookModel.Items
-            .Select(v => v.VolumeInfo.Description)
-            .FirstOrDefault() ?? string.Empty,
-        ISBN = bookModel.Items
-            .Select(v => v.VolumeInfo.IndustryIdentifiers
-                .Where(i => i.Type.Equals("SBN_13"))
-                .Select(i => i.Identifier)
-                .FirstOrDefault())
-            .FirstOrDefault() ?? string.Empty,
-        Authors = bookModel.Items
-            .SelectMany(v => v.VolumeInfo.Authors)
-            .ToList(),
-        Author = string.Join(",", Authors),
-        Genres = bookModel.Items
-            .SelectMany(g => g.VolumeInfo.Categories)
-            .ToList(),
-        Genre = string.Join(",", Genres),
-        PublishedAtStr = bookModel.Items
-            .Select(v => v.VolumeInfo.PublishedDate)
-            .FirstOrDefault() ?? string.Empty,
-        PublishedAt = DateTime.Parse(PublishedAtStr),
-        NumberOfPages = bookModel.Items
-            .Select(v => v.VolumeInfo.PageCount)
-            .FirstOrDefault(),
-    }; 
+
+        Title = volumeInfo.Title;
+        Description = volumeInfo.Description;
+        ISBN = volumeInfo.IndustryIdentifiers.Where(i => i.Type.Equals("ISBN_13")).Select(i => i.Identifier).FirstOrDefault() ?? string.Empty;
+        Authors = volumeInfo.Authors;
+        Author = string.Join(", ", Authors);
+        Genres = volumeInfo.Categories;
+        Genre = string.Join(", ", Genres);
+        PublishedAt = volumeInfo.PublishedDate;
+        NumberOfPages = volumeInfo.PageCount;      
+    }
 }

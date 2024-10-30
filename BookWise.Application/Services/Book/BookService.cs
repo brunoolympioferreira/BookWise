@@ -4,6 +4,7 @@ using BookWise.Application.Validations.Book;
 using BookWise.Core.Exceptions;
 using BookWise.Infra.GoogleBook;
 using BookWise.Infra.Persistence.UnityOfWork;
+using System.Runtime.CompilerServices;
 
 namespace BookWise.Application.Services.Book;
 public class BookService(IUnityOfWork unityOfWork, IGoogleBookClient bookClient) : IBookService
@@ -14,10 +15,15 @@ public class BookService(IUnityOfWork unityOfWork, IGoogleBookClient bookClient)
 
         BookModel bookResult = await bookClient.GetByISBN(model.ISBN);
 
+        if (bookResult.TotalItems == 0)
+            throw new NotFoundErrorsException($"Não foram encontrados resultados para o ISBN: {model.ISBN}");
+
         BookDTO bookDTO = new();
-        bookDTO.FromModel(bookResult);
+        bookDTO.FromModel(bookResult.Items.Single().VolumeInfo);
 
         Core.Entities.Book book = bookDTO.ToEntity();
+
+        // VALIDAR SE O LIVRO JÁ EXISTE NA BASE DE DADOS ANTES DE INSERIR
 
         await unityOfWork.Books.AddAsync(book);
         await unityOfWork.CompleteAsync();
