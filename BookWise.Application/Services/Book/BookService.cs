@@ -23,7 +23,12 @@ public class BookService(IUnityOfWork unityOfWork, IGoogleBookClient bookClient)
 
         Core.Entities.Book book = bookDTO.ToEntity();
 
-        // VALIDAR SE O LIVRO JÁ EXISTE NA BASE DE DADOS ANTES DE INSERIR
+        bool existBook = await unityOfWork.Books.FindByISBNAsync(book.ISBN);
+
+        if (!existBook)
+        {
+            throw new NotFoundErrorsException($"Livro {book.Title} não existe na base de dados");
+        }
 
         await unityOfWork.Books.AddAsync(book);
         await unityOfWork.CompleteAsync();
