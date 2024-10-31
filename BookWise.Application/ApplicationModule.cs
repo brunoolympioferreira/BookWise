@@ -1,5 +1,6 @@
 ﻿using BookWise.Application.Services.Account;
 using BookWise.Application.Services.Auth;
+using BookWise.Application.Services.Book;
 using BookWise.Application.Services.User;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,7 @@ public static class ApplicationModule
         return services
             .AddScoped<IUserService, UserService>()
             .AddScoped<ILoginService, LoginService>()
-            .AddScoped<IAuthService, AuthService>();
+            .AddScoped<IAuthService, AuthService>()
+            .AddScoped<IBookService, BookService>();
     }
 }

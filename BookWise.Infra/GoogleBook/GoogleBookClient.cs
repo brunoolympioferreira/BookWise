@@ -33,8 +33,6 @@ public class GoogleBookClient : IGoogleBookClient
             PropertyNameCaseInsensitive = true
         }) ?? throw new Exception("Houve um problema ao buscar o Livro");
 
-        // Mapear para model de produto
-
         return model;
     }
 }
