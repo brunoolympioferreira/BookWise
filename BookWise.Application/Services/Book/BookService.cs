@@ -25,9 +25,9 @@ public class BookService(IUnityOfWork unityOfWork, IGoogleBookClient bookClient)
 
         bool existBook = await unityOfWork.Books.FindByISBNAsync(book.ISBN);
 
-        if (!existBook)
+        if (existBook)
         {
-            throw new NotFoundErrorsException($"Livro {book.Title} não existe na base de dados");
+            throw new ValidationErrorsException($"Livro {book.Title} já existente na base de dados");
         }
 
         await unityOfWork.Books.AddAsync(book);
