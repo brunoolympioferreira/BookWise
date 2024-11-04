@@ -1,6 +1,8 @@
 ﻿using BookWise.Application.Models.DTOs;
 using BookWise.Application.Models.InputModels.Book;
+using BookWise.Application.Models.ViewModels.Book;
 using BookWise.Application.Validations.Book;
+using BookWise.Core.Entities;
 using BookWise.Core.Exceptions;
 using BookWise.Infra.GoogleBook;
 using BookWise.Infra.Persistence.UnityOfWork;
@@ -34,6 +36,15 @@ public class BookService(IUnityOfWork unityOfWork, IGoogleBookClient bookClient)
         await unityOfWork.CompleteAsync();
 
         return book.Id;
+    }
+
+    public async Task<List<BookViewModel>> GetAll()
+    {
+        List<Core.Entities.Book> books = await unityOfWork.Books.GetAllAsync();
+
+        List<BookViewModel> viewModels = books.Select(book => new BookViewModel(book)).ToList();
+
+        return viewModels;
     }
 
     private static void ModelValidate(CreateBookInputModel model)

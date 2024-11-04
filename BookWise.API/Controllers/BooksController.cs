@@ -8,7 +8,7 @@ namespace BookWise.API.Controllers;
 [ApiController]
 public class BooksController : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("google-api")]
     public async Task<IActionResult> GetByParameters([FromServices] IGoogleBookClient client, string? title, string? author)
     {
         var result = await client.GetByParametersAsync(title, author);
@@ -20,6 +20,14 @@ public class BooksController : ControllerBase
     public async Task<IActionResult> Create([FromServices] IBookService service, [FromBody] CreateBookInputModel model)
     {
         var result = await service.Create(model);
+
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll([FromServices] IBookService service)
+    {
+        var result = await service.GetAll();
 
         return Ok(result);
     }

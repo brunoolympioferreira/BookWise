@@ -14,4 +14,9 @@ public class BookRepository(BookWiseDbContext dbContext) : IBookRepository
     {
         return await dbContext.Books.AnyAsync(x => x.ISBN == isbn);
     }
+
+    public async Task<List<Book>> GetAllAsync()
+    {
+        return await dbContext.Books.AsNoTracking().ToListAsync();
+    }
 }
