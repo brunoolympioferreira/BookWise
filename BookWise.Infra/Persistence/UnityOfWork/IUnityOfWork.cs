@@ -5,6 +5,7 @@ public interface IUnityOfWork
 {
     IUserRepository Users { get; }
     IBookRepository Books { get; }
+    IReviewRepository Reviews { get; }
 
     Task<int> CompleteAsync();
 }
