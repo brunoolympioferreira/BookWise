@@ -5,6 +5,7 @@ public class BookDetailViewModel
 {
     public BookDetailViewModel(Core.Entities.Book book, List<ReviewDetailViewModel> reviewViewModels)
     {
+        Id = book.Id;
         Title = book.Title;
         Description = book.Description;
         ISBN = book.ISBN;
@@ -16,6 +17,7 @@ public class BookDetailViewModel
         Reviews = reviewViewModels;
     }
 
+    public Guid Id { get; set; }
     public string Title { get; }
     public string Description { get; }
     public string ISBN { get; }
