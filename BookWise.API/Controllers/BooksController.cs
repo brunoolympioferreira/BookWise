@@ -31,4 +31,12 @@ public class BooksController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById([FromServices] IBookService service, Guid id)
+    {
+        var result = await service.GetById(id);
+
+        return Ok(result);
+    }
 }
