@@ -8,4 +8,5 @@ public interface IBookRepository
     Task<bool> FindByISBNAsync(string isbn);
     Task<List<Book>> GetAllAsync();
     Task<Result<Book>> GetByIdAsync(Guid id);
+    void Remove(Book book);
 }

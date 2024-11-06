@@ -62,6 +62,20 @@ public class BookService(IUnityOfWork unityOfWork, IGoogleBookClient bookClient)
         return bookViewModel;
     }
 
+    public async Task Remove(Guid id)
+    {
+        Result<Core.Entities.Book> book = await unityOfWork.Books.GetByIdAsync(id);
+
+        if (!book.IsSuccess)
+        {
+            throw new NotFoundErrorsException(book.Error);
+        }
+
+        unityOfWork.Books.Remove(book.Value);
+
+        await unityOfWork.CompleteAsync();
+    }
+
     private static void ModelValidate(CreateBookInputModel model)
     {
         var validator = new CreateBookValidation();

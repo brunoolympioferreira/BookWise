@@ -7,4 +7,5 @@ public interface IBookService
     Task<Guid> Create(CreateBookInputModel model);
     Task<List<BookViewModel>> GetAll();
     Task<BookDetailViewModel> GetById(Guid id);
+    Task Remove(Guid id);
 }
