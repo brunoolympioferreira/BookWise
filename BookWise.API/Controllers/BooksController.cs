@@ -1,11 +1,13 @@
 ﻿using BookWise.Application.Models.InputModels.Book;
 using BookWise.Application.Services.Book;
 using BookWise.Infra.GoogleBook;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookWise.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class BooksController : ControllerBase
 {
     [HttpGet("google-api")]
