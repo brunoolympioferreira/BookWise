@@ -1,10 +1,11 @@
 ﻿using BookWise.Application.Models.DTOs;
 using BookWise.Application.Models.InputModels.Book;
+using BookWise.Application.Models.ViewModels.Book;
+using BookWise.Application.Models.ViewModels.Review;
 using BookWise.Application.Validations.Book;
 using BookWise.Core.Exceptions;
 using BookWise.Infra.GoogleBook;
 using BookWise.Infra.Persistence.UnityOfWork;
-using System.Runtime.CompilerServices;
 
 namespace BookWise.Application.Services.Book;
 public class BookService(IUnityOfWork unityOfWork, IGoogleBookClient bookClient) : IBookService
@@ -34,6 +35,31 @@ public class BookService(IUnityOfWork unityOfWork, IGoogleBookClient bookClient)
         await unityOfWork.CompleteAsync();
 
         return book.Id;
+    }
+
+    public async Task<List<BookViewModel>> GetAll()
+    {
+        List<Core.Entities.Book> books = await unityOfWork.Books.GetAllAsync();
+
+        List<BookViewModel> viewModels = books.Select(book => new BookViewModel(book)).ToList();
+
+        return viewModels;
+    }
+
+    public async Task<BookDetailViewModel> GetById(Guid id)
+    {
+        Result<Core.Entities.Book> book = await unityOfWork.Books.GetByIdAsync(id);
+
+        if (!book.IsSuccess)
+        {
+            throw new NotFoundErrorsException(book.Error);
+        }
+
+        List<ReviewDetailViewModel> reviewViewModels = book.Value.Reviews.Select(review => new ReviewDetailViewModel(review)).ToList();
+
+        BookDetailViewModel bookViewModel = new(book.Value, reviewViewModels);
+
+        return bookViewModel;
     }
 
     private static void ModelValidate(CreateBookInputModel model)
