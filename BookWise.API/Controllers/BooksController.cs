@@ -41,4 +41,12 @@ public class BooksController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Remove([FromServices] IBookService service, Guid id)
+    {
+        await service.Remove(id);
+
+        return Ok();
+    }
 }

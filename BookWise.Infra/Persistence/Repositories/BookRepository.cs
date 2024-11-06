@@ -21,6 +21,11 @@ public class BookRepository(BookWiseDbContext dbContext) : IBookRepository
         return await dbContext.Books.AsNoTracking().ToListAsync();
     }
 
+    public void Remove(Book book)
+    {
+        dbContext.Remove(book);
+    }
+
     public async Task<Result<Book>> GetByIdAsync(Guid id)
     {
         var book = await dbContext.Books
