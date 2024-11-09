@@ -31,6 +31,7 @@ public class BookRepository(BookWiseDbContext dbContext) : IBookRepository
         var book = await dbContext.Books
             .AsNoTracking()
             .Include(r => r.Reviews)
+                .ThenInclude(r => r.User)
             .SingleOrDefaultAsync(b => b.Id == id);
 
         if (book is null)
