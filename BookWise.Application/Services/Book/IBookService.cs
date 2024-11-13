@@ -8,4 +8,5 @@ public interface IBookService
     Task<List<BookViewModel>> GetAll();
     Task<BookDetailViewModel> GetById(Guid id);
     Task Remove(Guid id);
+    Task UpdateAverageGrade(Guid bookId);
 }

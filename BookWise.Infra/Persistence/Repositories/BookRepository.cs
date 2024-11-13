@@ -31,6 +31,7 @@ public class BookRepository(BookWiseDbContext dbContext) : IBookRepository
         var book = await dbContext.Books
             .AsNoTracking()
             .Include(r => r.Reviews)
+                .ThenInclude(r => r.User)
             .SingleOrDefaultAsync(b => b.Id == id);
 
         if (book is null)
@@ -39,5 +40,19 @@ public class BookRepository(BookWiseDbContext dbContext) : IBookRepository
         }
 
         return Result<Book>.Success(book);
+    }
+
+    public async Task<Book> GetToUpdateByIdAsync(Guid id)
+    {
+        var book = await dbContext.Books
+            .AsNoTracking()
+            .SingleOrDefaultAsync(b => b.Id == id);
+
+        return book;
+    }
+
+    public void Update(Book book)
+    {
+        dbContext.Update(book);
     }
 }

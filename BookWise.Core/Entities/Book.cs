@@ -23,4 +23,10 @@ public class Book : BaseEntity
     public int NumberOfPages { get; private set; }
     public decimal AverageGrade { get; private set; }
     public List<Review> Reviews { get; private set; }
+
+    public void UpdateAverageGrade(decimal average)
+    {
+        AverageGrade = average;
+        Updated();
+    }
 }

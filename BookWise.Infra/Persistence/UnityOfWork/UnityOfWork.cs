@@ -1,5 +1,4 @@
 ﻿using BookWise.Core.Repositories;
-using BookWise.Infra.Persistence;
 
 namespace BookWise.Infra.Persistence.UnityOfWork;
 public class UnityOfWork : IUnityOfWork
@@ -8,11 +7,13 @@ public class UnityOfWork : IUnityOfWork
 
     public UnityOfWork(BookWiseDbContext dbContext,
         IUserRepository users,
-        IBookRepository books)
+        IBookRepository books,
+        IReviewRepository reviews)
     {
         _dbContext = dbContext;
         Users = users;
         Books = books;
+        Reviews = reviews;
     }
 
     public async Task<int> CompleteAsync()
@@ -22,6 +23,7 @@ public class UnityOfWork : IUnityOfWork
 
     public IUserRepository Users { get; }
     public IBookRepository Books { get; }
+    public IReviewRepository Reviews { get; }
 
     public void Dispose()
     {

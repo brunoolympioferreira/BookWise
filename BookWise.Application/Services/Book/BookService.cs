@@ -37,6 +37,20 @@ public class BookService(IUnityOfWork unityOfWork, IGoogleBookClient bookClient)
         return book.Id;
     }
 
+    public async Task UpdateAverageGrade(Guid bookId)
+    {
+        List<Core.Entities.Review> reviews = await unityOfWork.Reviews.GetReviewsLightedByBookId(bookId);
+
+        decimal average = (decimal)reviews.Average(r => r.Grade);
+
+        var book = await unityOfWork.Books.GetToUpdateByIdAsync(bookId);
+        book.UpdateAverageGrade(average);
+
+        unityOfWork.Books.Update(book);
+        await unityOfWork.CompleteAsync();
+ 
+    }
+
     public async Task<List<BookViewModel>> GetAll()
     {
         List<Core.Entities.Book> books = await unityOfWork.Books.GetAllAsync();
