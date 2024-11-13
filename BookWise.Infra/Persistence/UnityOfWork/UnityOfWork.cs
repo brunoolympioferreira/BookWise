@@ -1,5 +1,4 @@
 ﻿using BookWise.Core.Repositories;
-using BookWise.Infra.Persistence;
 
 namespace BookWise.Infra.Persistence.UnityOfWork;
 public class UnityOfWork : IUnityOfWork

@@ -41,4 +41,18 @@ public class BookRepository(BookWiseDbContext dbContext) : IBookRepository
 
         return Result<Book>.Success(book);
     }
+
+    public async Task<Book> GetToUpdateByIdAsync(Guid id)
+    {
+        var book = await dbContext.Books
+            .AsNoTracking()
+            .SingleOrDefaultAsync(b => b.Id == id);
+
+        return book;
+    }
+
+    public void Update(Book book)
+    {
+        dbContext.Update(book);
+    }
 }

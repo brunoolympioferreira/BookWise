@@ -1,11 +1,12 @@
 ﻿using BookWise.Application.Models.InputModels.Review;
 using BookWise.Application.Models.ViewModels.Review;
+using BookWise.Application.Services.Book;
 using BookWise.Application.Validations.Review;
 using BookWise.Core.Exceptions;
 using BookWise.Infra.Persistence.UnityOfWork;
 
 namespace BookWise.Application.Services.Review;
-public class ReviewService(IUnityOfWork unityOfWork) : IReviewService
+public class ReviewService(IUnityOfWork unityOfWork, IBookService bookService) : IReviewService
 {
     public async Task<Guid> Create(CreateReviewInputModel model)
     {
@@ -15,6 +16,8 @@ public class ReviewService(IUnityOfWork unityOfWork) : IReviewService
 
         await unityOfWork.Reviews.Add(review);
         await unityOfWork.CompleteAsync();
+
+        await bookService.UpdateAverageGrade(review.BookId);
 
         return review.Id;
     }

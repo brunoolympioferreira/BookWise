@@ -5,4 +5,5 @@ public interface IReviewRepository
 {
     Task Add(Review review);
     Task<List<Review>> GetReviewsByBookId(Guid bookId);
+    Task<List<Review>> GetReviewsLightedByBookId(Guid bookId);
 }
