@@ -76,6 +76,13 @@ public class BookService(IUnityOfWork unityOfWork, IGoogleBookClient bookClient)
         return bookViewModel;
     }
 
+    public async Task<int> GetReadBooksByYear(int year)
+    {
+        List<Core.Entities.Book> books = await unityOfWork.Books.GetAllByYearAsync(year);
+
+        return books.Count;
+    }
+
     public async Task Remove(Guid id)
     {
         Result<Core.Entities.Book> book = await unityOfWork.Books.GetByIdAsync(id);
