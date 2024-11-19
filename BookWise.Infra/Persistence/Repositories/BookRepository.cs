@@ -21,6 +21,17 @@ public class BookRepository(BookWiseDbContext dbContext) : IBookRepository
         return await dbContext.Books.AsNoTracking().ToListAsync();
     }
 
+    public async Task<List<Book>> GetAllByYearAsync(int year)
+    {
+        var books = await dbContext.Books
+            .AsNoTracking()
+            .Include(r => r.Reviews)
+            .Where(r => r.Reviews.Any(x => x.CreatedAt.Year == year))
+            .ToListAsync();
+
+        return books;
+    }
+
     public void Remove(Book book)
     {
         dbContext.Remove(book);
