@@ -5,6 +5,12 @@ VisualStudioVersion = 17.10.35201.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWise.API", "BookWise.API\BookWise.API.csproj", "{7E8D62C7-4FA8-45D9-9744-94F3D8370ADA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWise.Application", "BookWise.Application\BookWise.Application.csproj", "{02B75F90-C87D-4EFD-A56A-F2C0289B6EDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWise.Infra", "BookWise.Infra\BookWise.Infra.csproj", "{5D5CA2F8-084F-4FA8-BD7A-DDFC9C0CABD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWise.Core", "BookWise.Core\BookWise.Core.csproj", "{D7F100FB-858C-4887-B5FD-AC8F18B985EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{7E8D62C7-4FA8-45D9-9744-94F3D8370ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E8D62C7-4FA8-45D9-9744-94F3D8370ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E8D62C7-4FA8-45D9-9744-94F3D8370ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02B75F90-C87D-4EFD-A56A-F2C0289B6EDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02B75F90-C87D-4EFD-A56A-F2C0289B6EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02B75F90-C87D-4EFD-A56A-F2C0289B6EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02B75F90-C87D-4EFD-A56A-F2C0289B6EDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D5CA2F8-084F-4FA8-BD7A-DDFC9C0CABD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D5CA2F8-084F-4FA8-BD7A-DDFC9C0CABD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D5CA2F8-084F-4FA8-BD7A-DDFC9C0CABD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D5CA2F8-084F-4FA8-BD7A-DDFC9C0CABD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7F100FB-858C-4887-B5FD-AC8F18B985EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7F100FB-858C-4887-B5FD-AC8F18B985EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7F100FB-858C-4887-B5FD-AC8F18B985EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7F100FB-858C-4887-B5FD-AC8F18B985EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
