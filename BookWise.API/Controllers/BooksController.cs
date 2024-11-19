@@ -49,4 +49,12 @@ public class BooksController : ControllerBase
 
         return Ok();
     }
+
+    [HttpGet("read-year")]
+    public async Task<IActionResult> GetByYear([FromServices] IBookService service, int year)
+    {
+        var result = await service.GetReadBooksByYear(year);
+
+        return Ok(result);
+    }
 }
